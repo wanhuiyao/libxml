@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<house>
+  <room id="dining room">
+    <table/>
+    <chair>this is a chair</chair>
+  </room>
+  <room id="bedroom">
+    <chair color="red"/>
+    <mirror/>
+    <lamp/>
+    <bed>a bed for two</bed>
+  </room>
+  <room id="kitchen">
+    <table size="big" color="blue">a big blue table</table>
+    <chair color="blue"/>
+    <chair color="red"/>
+  </room>
+</house>
