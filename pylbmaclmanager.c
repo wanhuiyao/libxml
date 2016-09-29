@@ -154,7 +154,7 @@ void printAclNodes(Pylbm_AclNode* node){
 void printAclNode(const Pylbm_AclNode* node){
     printf("%s, %s, %s, %s\n", node->prodId, node->pattern,
            (node->type == SOURCE) ? "src" : (node->type == RECEIVER) ? "rcv" : "unknown",
-           (node->action == ALLOW) ? "allow" : (node->action == DENY) ? "demy" : "unknown");
+           (node->action == ALLOW) ? "allow" : (node->action == DENY) ? "deny" : "unknown");
 }
 
 void printXmlNode(const xmlNode* node){
