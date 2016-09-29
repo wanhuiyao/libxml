@@ -25,24 +25,12 @@ struct _Pylbm_AclNode{
 
 typedef struct _Pylbm_AclNode Pylbm_AclNode;
 
-struct _Pylbm_AclBucket{
-    char* prodId;
-    Pylbm_AclNode* head;
-    Pylbm_AclNode* tail;
-    struct _Pylbm_AclBucket* next;
-};
-
-typedef struct _Pylbm_AclBucket Pylbm_AclBucket;
-
 Pylbm_AclNode* pylbmParseXmlFile(char* xmlFile);
 Pylbm_AclNode* pylbmParseXmlNode(xmlNode* node, const char* name, Pylbm_AclNode* head, Pylbm_AclNode* tail);
 Pylbm_AclNode* generateAclNodeFromXmlNode(xmlNode* node);
 void pylbmCleanPylbm_AlcNodes(Pylbm_AclNode* node);
 void pylbmCleanPylbm_AlcNode(Pylbm_AclNode* node);
 int pylbmVerifyAclNode(const Pylbm_AclNode* node);
-
-//Pylbm_AclBucket* pylbmParseXmlBucket(xmlNode* node);
-
 
 void printAclNodes(Pylbm_AclNode* node);
 void printAclNode(const Pylbm_AclNode* node);
