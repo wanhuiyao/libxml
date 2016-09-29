@@ -35,7 +35,6 @@ struct _Pylbm_AclBucket{
 typedef struct _Pylbm_AclBucket Pylbm_AclBucket;
 
 Pylbm_AclNode* pylbmParseXmlFile(char* xmlFile);
-xmlNode* pylbmFindXmlNode(xmlNode* node, const char* name);
 Pylbm_AclNode* pylbmParseXmlNode(xmlNode* node, const char* name, Pylbm_AclNode* head, Pylbm_AclNode* tail);
 Pylbm_AclNode* generateAclNodeFromXmlNode(xmlNode* node);
 void pylbmCleanPylbm_AlcNodes(Pylbm_AclNode* node);
