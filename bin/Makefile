@@ -48,8 +48,10 @@ OBJECTS_DIR   = ./
 
 ####### Files
 
-SOURCES       = ../app.cpp 
-OBJECTS       = app.o
+SOURCES       = ../app.c \
+		../pylbmaclmanager.c 
+OBJECTS       = app.o \
+		pylbmaclmanager.o
 DIST          = /usr/lib/qt/mkspecs/features/spec_pre.prf \
 		/usr/lib/qt/mkspecs/common/unix.conf \
 		/usr/lib/qt/mkspecs/common/linux.conf \
@@ -200,7 +202,8 @@ DIST          = /usr/lib/qt/mkspecs/features/spec_pre.prf \
 		/usr/lib/qt/mkspecs/features/exceptions.prf \
 		/usr/lib/qt/mkspecs/features/yacc.prf \
 		/usr/lib/qt/mkspecs/features/lex.prf \
-		../../libxmlTest.pro  ../app.cpp
+		../../libxmlTest.pro ../pylbmaclmanager.h ../app.c \
+		../pylbmaclmanager.c
 QMAKE_TARGET  = libxmlTest
 DESTDIR       = 
 TARGET        = libxmlTest
@@ -533,7 +536,8 @@ dist: distdir FORCE
 distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
-	$(COPY_FILE) --parents ../app.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ../pylbmaclmanager.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../app.c ../pylbmaclmanager.c $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -573,8 +577,11 @@ compiler_clean:
 
 ####### Compile
 
-app.o: ../app.cpp 
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o app.o ../app.cpp
+app.o: ../app.c ../pylbmaclmanager.h
+	$(CC) -c $(CFLAGS) $(INCPATH) -o app.o ../app.c
+
+pylbmaclmanager.o: ../pylbmaclmanager.c ../pylbmaclmanager.h
+	$(CC) -c $(CFLAGS) $(INCPATH) -o pylbmaclmanager.o ../pylbmaclmanager.c
 
 ####### Install
 
