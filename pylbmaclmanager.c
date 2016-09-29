@@ -8,12 +8,7 @@ Pylbm_AclNode* pylbmParseXmlFile(char* xmlFile){
     Pylbm_AclNode* head = NULL;
     if(doc){
         xmlNode* root = xmlDocGetRootElement(doc);
-        if(root){
-            xmlNode* firstUmpAclNode = pylbmFindXmlNode(root, "UMPACL");
-            if(firstUmpAclNode){
-                head = pylbmParseXmlNode(firstUmpAclNode);
-            }
-        }
+        head = pylbmParseXmlNode(root, "UMPACL", NULL, NULL);
         xmlFreeDoc(doc);
         xmlCleanupParser();
     }
@@ -24,43 +19,25 @@ Pylbm_AclNode* pylbmParseXmlFile(char* xmlFile){
 #endif
 }
 
-xmlNode* pylbmFindXmlNode(xmlNode* node, const char* name){
-    if(node){
-        xmlNode* currentXmlNode = NULL;
-        for(currentXmlNode = node; currentXmlNode; currentXmlNode = currentXmlNode->next){
-            if(currentXmlNode->type == XML_ELEMENT_NODE
-                    && strcmp((const char*)currentXmlNode->name, name) == 0){
-                return currentXmlNode;
-            }
-
-            xmlNode *t = pylbmFindXmlNode(currentXmlNode->children, name);
-            if(t){
-                return t;
-            }
-        }
-    }
-    return NULL;
-}
-
-Pylbm_AclNode* pylbmParseXmlNode(xmlNode* node){
-    Pylbm_AclNode* cursor = NULL;
-    Pylbm_AclNode* head = NULL;
-    xmlNode* currentXmlNode = node;
-    for(; currentXmlNode; currentXmlNode= currentXmlNode->next){
-        if(currentXmlNode->type == XML_ELEMENT_NODE
-                && strcmp((const char*)(currentXmlNode->name), "UMPACL") == 0){
-            printXmlNode(currentXmlNode);
-            Pylbm_AclNode* t = generateAclNodeFromXmlNode(currentXmlNode);
-            if(t){
-                if(head == NULL){
-                    head = t;
-                    cursor = t;
+Pylbm_AclNode* pylbmParseXmlNode(xmlNode* xmlNode_t, const char* name, Pylbm_AclNode* head, Pylbm_AclNode* tail){
+    while(xmlNode_t){
+        if(xmlNode_t->type == XML_ELEMENT_NODE
+                && strcmp((const char*)xmlNode_t->name, name) == 0){
+            Pylbm_AclNode* newAclNode = generateAclNodeFromXmlNode(xmlNode_t);
+            printAclNode(newAclNode);
+            if(newAclNode){
+                if(head){
+                    tail->next = newAclNode;
+                    tail = tail->next;
+                }else{
+                    head = tail = newAclNode;
                 }
-
-                cursor->next = t;
-                cursor = cursor->next;
             }
+        }else{
+            head = pylbmParseXmlNode(xmlNode_t->children, name, head, tail);
         }
+
+        xmlNode_t = xmlNode_t->next;
     }
     return head;
 }
